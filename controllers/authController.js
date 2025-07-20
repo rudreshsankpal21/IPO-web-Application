@@ -1,12 +1,18 @@
 const pool = require("../config/db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { validationResult } = require("express-validator");
 
 // REGISTER USER
 const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     // Check if user already exists
     const existingUser = await pool.query(
       "SELECT * FROM users WHERE email = $1",
