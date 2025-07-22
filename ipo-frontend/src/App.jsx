@@ -1,6 +1,7 @@
 import "./App.css";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import IPODetails from "./pages/IPODetails";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import AddIPO from "./pages/AddIPO";
@@ -16,6 +17,7 @@ function App() {
         <Route path="/add" element={<AddIPO />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/ipo/:id" element={<IPODetails />} />
       </Routes>
     </Router>
   );
