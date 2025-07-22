@@ -20,23 +20,44 @@ function Home() {
   const handleView = (id) => navigate(`/ipo/${id}`);
   const handleEdit = (id) => navigate(`/edit/${id}`);
   const handleDelete = async (id) => {
-    await deleteIPO(id);
-    loadIPOs();
+    if (window.confirm("Are you sure you want to delete this IPO?")) {
+      await deleteIPO(id);
+      loadIPOs();
+    }
+  };
+
+  const handleAddIPO = () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Please register or login first!");
+      navigate("/register");
+    } else {
+      navigate("/add");
+    }
   };
 
   return (
-    <div>
-      <h1 style={{ padding: "20px" }}>All IPOs</h1>
-      <div className="ipo-container">
-        {ipos.map((ipo) => (
-          <IPOCard
-            key={ipo.id}
-            ipo={ipo}
-            onView={handleView}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-          />
-        ))}
+    <div className="home-container">
+      <div className="hero">
+        <h1>Welcome to IPO Tracker</h1>
+        <p>Manage upcoming IPOs, track details, and stay updated.</p>
+        <button onClick={handleAddIPO}>+ Add New IPO</button>
+      </div>
+
+      <div className="ipo-grid">
+        {ipos.length === 0 ? (
+          <p className="no-data">No IPOs available. Add one now!</p>
+        ) : (
+          ipos.map((ipo) => (
+            <IPOCard
+              key={ipo.id}
+              ipo={ipo}
+              onView={handleView}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+            />
+          ))
+        )}
       </div>
     </div>
   );

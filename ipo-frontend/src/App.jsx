@@ -1,5 +1,3 @@
-import "./App.css";
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import IPODetails from "./pages/IPODetails";
 import Navbar from "./components/Navbar";
